@@ -13,9 +13,8 @@ function App() {
   return (
     <div className='all'>
       <h1 className='teamName'>The Phantom Thieves</h1>
-      <img src={ash} alt="ash.png" className='ash'/>
       <div className='navbar'>
-        <div className='navbarElement' onClick={() => setShow(1)}>Home</div>
+        <div className='navbarElement navbarElementFirst' onClick={() => setShow(1)}>Home</div>
         <div className='navbarElement' onClick={() => setShow(2)}>Time Sheets</div>
       </div>
       <br/>
@@ -29,6 +28,7 @@ function App() {
         :
         null
       }
+      <img src={ash} alt="ash.png" className='ash'/>
     </div>
   )
 }
