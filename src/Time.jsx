@@ -2,7 +2,7 @@ export function Time() {
     return (
         <div className="timeTablesContainer">
             <table className="timeTable">
-                <caption>Time Estimates for Week 1</caption>
+                <caption>Time Hours for Week 1</caption>
                 <tr className="timeTableRow tableHeader">
                     <th className="timeTableName">Name</th>
                     <th className="timeTableHours">Hours</th>
