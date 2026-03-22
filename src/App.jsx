@@ -1,4 +1,3 @@
-import ash from '/ash.png'
 import './App.css'
 import { useState } from 'react'
 import Home from './Home'
@@ -6,55 +5,60 @@ import Time from './Time'
 import Domain from './Domain'
 import Plan from './Plan'
 import Fours from './Fours'
+import ash from '/ash.png'
 
-const HOME = 1
-const TIME = 2
-const DOMAIN = 3
-const PLAN = 4
-const FOUR = 5
+const NAV = [
+  { id: 1, label: 'Home' },
+  { id: 2, label: 'Time Sheets' },
+  { id: 5, label: 'Four-Ups' },
+  { id: 3, label: 'Domain Model' },
+  { id: 4, label: 'Project Plan' },
+]
 
-function App() {
-  const [show, setShow] = useState(HOME)
+{/*pages are all mounted but still hidden. Trying to prevent the nav bar jumping around*/} 
+const COMPONENTS = { 1: Home, 2: Time, 3: Domain, 4: Plan, 5: Fours }
+
+export default function App() {
+  const [show, setShow] = useState(1)
 
   return (
-    <div className='all'>
-      <h1 className='teamName'>The Phantom Thieves</h1>
-      <div className='navbar'>
-        <div className='navbarElement navbarElementFirst' onClick={() => setShow(1)}>Home</div>
-        <div className='navbarElement' onClick={() => setShow(2)}>Time Sheets</div>
-        <div className='navbarElement' onClick={() => setShow(5)}>Four Ups</div>
-        <div className='navbarElement' onClick={() => setShow(3)}>Domain Model</div>
-        <div className='navbarElement' onClick={() => setShow(4)}>Project Plan</div>
-      </div>
-      <br/>
-      {show === HOME ?
-        <Home/>
-        :
-        null
-      }
-      {show === TIME ?
-        <Time/>
-        :
-        null
-      }
-      {show === DOMAIN ?
-        <Domain/>
-        :
-        null
-      }
-      {show === PLAN ?
-        <Plan/>
-        :
-        null
-      }
-      {show === FOUR ?
-        <Fours/>
-        :
-        null
-      }
-      <img src={ash} alt="ash.png" className='ash'/>
+    <div className="app-shell">
+      <header className="site-header">
+        <div className="header-inner">
+
+          {/*ash's face*/} 
+          <div className="brand">
+            <img src={ash} alt="Phantom Thieves" className="brand-img" />
+            <span className="brand-name">The Phantom Thieves</span>
+          </div>
+
+          {/*"home", "time sheets", "four-ups", "domain model", "project plan" nav bar*/} 
+          <nav className="main-nav">
+            {NAV.map(n => (
+              <button
+                key={n.id}
+                className={`nav-btn ${show === n.id ? 'active' : ''}`}
+                onClick={() => setShow(n.id)}
+              >
+                <span className="nav-slash">//</span>{n.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      <main className="main-content">
+        {Object.entries(COMPONENTS).map(([id, Comp]) => (
+          <div key={id} style={{ display: show === Number(id) ? 'block' : 'none' }}>
+            <Comp />
+          </div>
+        ))}
+      </main>
+      
+      {/*feeeeetttttttt*/} 
+      <footer className="site-footer">
+        <span className="footer-text">// THE PHANTOM THIEVES // CWA SUPPORT TOOL // {new Date().getFullYear()} //</span>
+      </footer>
     </div>
   )
 }
-
-export default App

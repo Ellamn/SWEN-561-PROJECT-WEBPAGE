@@ -1,58 +1,152 @@
-const WEEK_OBJECTS = [
-    {weekNumber: 3, 
-        hours: [{name: 'Ash', hours: 5},
-                {name: 'Ata', hours: 4}, 
-                {name: 'Cole', hours: 4}, 
-                {name: 'Ella', hours: 5}, 
-                {name: 'Jensen', hours: 4}, 
-                {name: 'Zach', hours: 5},
-                {name: 'Total', hours: 27}]
-    },
-    {weekNumber: 4, 
-        hours: [{name: 'Ash', hours: 9},
-                {name: 'Ata', hours: 8}, 
-                {name: 'Cole', hours: 8}, 
-                {name: 'Ella', hours: 10}, 
-                {name: 'Jensen', hours: 6}, 
-                {name: 'Zach', hours: 9},
-                {name: 'Total', hours: 50}]
-    },
-    {weekNumber: 5, 
-        hours: [{name: 'Ash', hours: 9},
-                {name: 'Ata', hours: 8}, 
-                {name: 'Cole', hours: 7}, 
-                {name: 'Ella', hours: 10}, 
-                {name: 'Jensen', hours: 8}, 
-                {name: 'Zach', hours: 8},
-                {name: 'Total', hours: 50}]
+import { useState, useEffect } from 'react'
+
+const MEMBERS = ['Ash', 'Ata', 'Cole', 'Ella', 'Jensen', 'Zach']
+//should be weeks 3-28 
+const WEEKS = Array.from({ length: 26 }, (_, i) => i + 3)
+
+//bump this whenever DEFAULT_DATA is edited in here
+const DATA_VERSION = 'v2' 
+
+// data persistance, too lazy for database lol
+const DEFAULT_DATA = {
+  3: { actual: { Ash: 5,  Ata: 4,  Cole: 4,  Ella: 5,  Jensen: 4,  Zach: 5  }, estimate: { Ash: 6,  Ata: 4,  Cole: 3,  Ella: 5,  Jensen: 3,  Zach: 6  } },
+  4: { actual: { Ash: 9,  Ata: 8,  Cole: 8,  Ella: 10, Jensen: 6,  Zach: 9  }, estimate: { Ash: 7,  Ata: 8,  Cole: 9,  Ella: 7,  Jensen: 8,  Zach: 7  } },
+  5: { actual: { Ash: 9,  Ata: 8,  Cole: 7,  Ella: 10, Jensen: 8,  Zach: 8  }, estimate: { Ash: 11, Ata: 9,  Cole: 9,  Ella: 15, Jensen: 10, Zach: 10 } },
+  6: { actual: { Ash: 9,  Ata: 13, Cole: 11, Ella: 15, Jensen: 13, Zach: 14 }, estimate: { Ash: 10, Ata: 13, Cole: 10, Ella: 15, Jensen: 12, Zach: 14 } },
+  7: { actual: { Ash: 9,  Ata: 9,  Cole: 8,  Ella: 17, Jensen: 10, Zach: 12 }, estimate: { Ash: 10, Ata: 11, Cole: 11, Ella: 15, Jensen: 11, Zach: 13 } },
+  8: { actual: { Ash: 12, Ata: 10, Cole: 9,  Ella: 18, Jensen: 12, Zach: 14 }, estimate: { Ash: 10, Ata: 12, Cole: 11, Ella: 20, Jensen: 12, Zach: 15 } },
+  9: { actual: { Ash: 0,  Ata: 0,  Cole: 0,  Ella: 0,  Jensen: 0,  Zach: 0  }, estimate: { Ash: 15, Ata: 11, Cole: 10, Ella: 15, Jensen: 12, Zach: 10 } },
+};
+
+function initData() {
+  const d = {}
+  for (const w of WEEKS) {
+    d[w] = DEFAULT_DATA[w] ?? {
+      actual:   Object.fromEntries(MEMBERS.map(m => [m, ''])),
+      estimate: Object.fromEntries(MEMBERS.map(m => [m, ''])),
     }
-]
+  }
+  return d
+}
+
+function total(obj) {
+  return MEMBERS.reduce((s, m) => s + (Number(obj[m]) || 0), 0)
+}
 
 export default function Time() {
-    return (
-        <div className="timeTablesContainer">
-            {WEEK_OBJECTS.map((w) => {
-                return(
-                    <table key={w.weekNumber} className="timeTable">
-                        <caption>Time Sheet for Week {w.weekNumber}</caption>
-                        <tbody>
-                            <tr className="timeTableRow tableHeader">
-                                <th className="timeTableName">Name</th>
-                                <th className="timeTableHours">Hours</th>
-                            </tr>
-                            {w.hours.map((i) => {
-                                return (
-                                    <tr key={i.name} className="timeTableRow">
-                                        <td className="timeTableName">{i.name}</td>
-                                        <td className="timeTableHours">{i.hours}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                )
-            })
-            }
+  const [data, setData] = useState(() => {
+    try {
+      const savedVersion = localStorage.getItem('phantom_time_version')
+      const saved = localStorage.getItem('phantom_time_data')
+      if (saved && savedVersion === DATA_VERSION) return JSON.parse(saved)
+      return initData()
+    } catch { return initData() }
+  })
+  const [editMode, setEditMode] = useState(false)
+  const [activeWeek, setActiveWeek] = useState(3)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('phantom_time_data', JSON.stringify(data))
+      localStorage.setItem('phantom_time_version', DATA_VERSION)
+    } catch {}
+  }, [data])
+
+  const handleChange = (week, type, member, value) => {
+    setData(prev => ({
+      ...prev,
+      [week]: {
+        ...prev[week],
+        [type]: { ...prev[week][type], [member]: value === '' ? '' : Number(value) }
+      }
+    }))
+  }
+
+  const weeksWithData = WEEKS.filter(w => total(data[w]?.actual ?? {}) > 0 || total(data[w]?.estimate ?? {}) > 0)
+  const displayWeeks = editMode ? WEEKS : weeksWithData
+
+  return (
+    <div className="page-container">
+      <div className="page-header">
+        <h2 className="page-title">Time Sheets</h2>
+        <button
+          className={`toggle-btn ${editMode ? 'active' : ''}`}
+          onClick={() => setEditMode(e => !e)}
+        >
+          {editMode ? '✓ Done Editing' : '✎ Edit Hours'}
+        </button>
+      </div>
+
+      {editMode && (
+        <div className="week-selector">
+          {WEEKS.map(w => (
+            <button
+              key={w}
+              className={`week-pill ${activeWeek === w ? 'active' : ''} ${total(data[w]?.actual ?? {}) > 0 ? 'has-data' : ''}`}
+              onClick={() => setActiveWeek(w)}
+            >
+              W{w}
+            </button>
+          ))}
         </div>
-    )
+      )}
+
+      <div className="tables-grid">
+        {(editMode ? [activeWeek] : displayWeeks).map(w => (
+          <div key={w} className="time-card">
+            <div className="card-week-label">Week {w}</div>
+            <table className="time-table">
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>Actual</th>
+                  <th>Estimate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MEMBERS.map(m => (
+                  <tr key={m}>
+                    <td className="member-name">{m}</td>
+                    <td>
+                      {editMode ? (
+                        <input
+                          type="number"
+                          min="0"
+                          className="hour-input"
+                          value={data[w]?.actual[m] ?? ''}
+                          onChange={e => handleChange(w, 'actual', m, e.target.value)}
+                          placeholder="—"
+                        />
+                      ) : (
+                        <span className="hour-val">{data[w]?.actual[m] || '—'}</span>
+                      )}
+                    </td>
+                    <td>
+                      {editMode ? (
+                        <input
+                          type="number"
+                          min="0"
+                          className="hour-input"
+                          value={data[w]?.estimate[m] ?? ''}
+                          onChange={e => handleChange(w, 'estimate', m, e.target.value)}
+                          placeholder="—"
+                        />
+                      ) : (
+                        <span className="hour-val est">{data[w]?.estimate[m] || '—'}</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+                <tr className="total-row">
+                  <td>Total</td>
+                  <td><span className="hour-val total">{total(data[w]?.actual ?? {})}</span></td>
+                  <td><span className="hour-val total est">{total(data[w]?.estimate ?? {})}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
