@@ -9,13 +9,16 @@ const DATA_VERSION = 'v2'
 
 // data persistance, too lazy for database lol
 const DEFAULT_DATA = {
-  3: { actual: { Ash: 5,  Ata: 4,  Cole: 4,  Ella: 5,  Jensen: 4,  Zach: 5  }, estimate: { Ash: 6,  Ata: 4,  Cole: 3,  Ella: 5,  Jensen: 3,  Zach: 6  } },
-  4: { actual: { Ash: 9,  Ata: 8,  Cole: 8,  Ella: 10, Jensen: 6,  Zach: 9  }, estimate: { Ash: 7,  Ata: 8,  Cole: 9,  Ella: 7,  Jensen: 8,  Zach: 7  } },
-  5: { actual: { Ash: 9,  Ata: 8,  Cole: 7,  Ella: 10, Jensen: 8,  Zach: 8  }, estimate: { Ash: 11, Ata: 9,  Cole: 9,  Ella: 15, Jensen: 10, Zach: 10 } },
-  6: { actual: { Ash: 9,  Ata: 13, Cole: 11, Ella: 15, Jensen: 13, Zach: 14 }, estimate: { Ash: 10, Ata: 13, Cole: 10, Ella: 15, Jensen: 12, Zach: 14 } },
-  7: { actual: { Ash: 9,  Ata: 9,  Cole: 8,  Ella: 17, Jensen: 10, Zach: 12 }, estimate: { Ash: 10, Ata: 11, Cole: 11, Ella: 15, Jensen: 11, Zach: 13 } },
-  8: { actual: { Ash: 12, Ata: 10, Cole: 9,  Ella: 18, Jensen: 12, Zach: 14 }, estimate: { Ash: 10, Ata: 12, Cole: 11, Ella: 20, Jensen: 12, Zach: 15 } },
-  9: { actual: { Ash: 0,  Ata: 0,  Cole: 0,  Ella: 0,  Jensen: 0,  Zach: 0  }, estimate: { Ash: 15, Ata: 11, Cole: 10, Ella: 15, Jensen: 12, Zach: 10 } },
+   3: { actual: { Ash: 5,   Ata: 4,   Cole: 4,   Ella: 5,   Jensen: 4,   Zach: 5  }, estimate: { Ash: 6,  Ata: 4,  Cole: 3,  Ella: 5,  Jensen: 3,  Zach: 6  } },
+   4: { actual: { Ash: 9,   Ata: 8,   Cole: 8,   Ella: 10,  Jensen: 6,   Zach: 9  }, estimate: { Ash: 7,  Ata: 8,  Cole: 9,  Ella: 7,  Jensen: 8,  Zach: 7  } },
+   5: { actual: { Ash: 9,   Ata: 8,   Cole: 7,   Ella: 10,  Jensen: 8,   Zach: 8  }, estimate: { Ash: 11, Ata: 9,  Cole: 9,  Ella: 15, Jensen: 10, Zach: 10 } },
+   6: { actual: { Ash: 9,   Ata: 13,  Cole: 11,  Ella: 15,  Jensen: 13,  Zach: 14 }, estimate: { Ash: 10, Ata: 13, Cole: 10, Ella: 15, Jensen: 12, Zach: 14 } },
+   7: { actual: { Ash: 9,   Ata: 9,   Cole: 8,   Ella: 17,  Jensen: 10,  Zach: 12 }, estimate: { Ash: 10, Ata: 11, Cole: 11, Ella: 15, Jensen: 11, Zach: 13 } },
+   8: { actual: { Ash: 12,  Ata: 10,  Cole: 9,   Ella: 18,  Jensen: 12,  Zach: 14 }, estimate: { Ash: 10, Ata: 12, Cole: 11, Ella: 20, Jensen: 12, Zach: 15 } },
+   9: { actual: { Ash: 10,  Ata: 11,  Cole: 8,   Ella: 15,  Jensen: 10,  Zach: 12 }, estimate: { Ash: 15, Ata: 11, Cole: 10, Ella: 15, Jensen: 12, Zach: 10 } },
+  10: { actual: { Ash: 16,  Ata: 13,  Cole: 9,   Ella: 13,  Jensen: 14,  Zach: 15 }, estimate: { Ash: 16, Ata: 14, Cole: 11, Ella: 10, Jensen: 14, Zach: 16 } },
+  11: { actual: { Ash: 18,  Ata: 12,  Cole: 10,  Ella: 8,   Jensen: 11,  Zach: 10 }, estimate: { Ash: 18, Ata: 15, Cole: 12, Ella: 10, Jensen: 12, Zach: 10 } },
+  12: { actual: { Ash: 0,   Ata: 0,   Cole: 0,   Ella: 0,   Jensen: 0,   Zach: 0  }, estimate: { Ash: 18, Ata: 15, Cole: 13, Ella: 15, Jensen: 14, Zach: 15 } },
 };
 
 function initData() {
@@ -36,9 +39,9 @@ function total(obj) {
 export default function Time() {
   const [data, setData] = useState(() => {
     try {
-      const savedVersion = localStorage.getItem('phantom_time_version')
-      const saved = localStorage.getItem('phantom_time_data')
-      if (saved && savedVersion === DATA_VERSION) return JSON.parse(saved)
+      // const savedVersion = localStorage.getItem('phantom_time_version')
+      // const saved = localStorage.getItem('phantom_time_data')
+      // if (saved && savedVersion === DATA_VERSION) return JSON.parse(saved)
       return initData()
     } catch { return initData() }
   })

@@ -36,6 +36,20 @@ const DEFAULT_FOURS = [
     risk:'Carryover tasks from Sprint 1 competing with new Sprint 2 priorities, team motivation dip following a heavy midterms and spring break',
     plan:'Run sprint retrospective at start of next week to surface blockers and wins, finalize Sprint 2 ticket assignments with input from all members before development begins'
   },
+  {
+    weekNumber: 10,
+    vision:'Meeting with the sponsor for the first time in a while, catch them up on everything that we\'ve made progress on and align on goals going forward',
+    metrics:'Sprint 2 progress in jira and work hours per tea mmember',
+    risk:'Carryover tasks from Sprint 1 competing with new Sprint 2 priorities, team motivation dip following a heavy midterms and spring break',
+    plan:'Run sprint retrospective at start of next week to surface blockers and wins, finalize Sprint 2 ticket assignments with input from all members before development begins'
+  },
+  {
+    weekNumber: 11,
+    vision:'preparing the video for presentation to other senior project groups',
+    metrics:'A completed presentation of why our project matters',
+    risk:'None of the team has experience in video production, we might be overfocusing on the video and neglecting regular progress',
+    plan:'Put together a script and record during team meeting on Wednesday'
+  },
 ]
 
 //bump this when DEFAULT_FOURS makes a change
@@ -51,9 +65,9 @@ const FIELDS = [
 export default function Fours() {
   const [fours, setFours] = useState(() => {
     try {
-      const savedVersion = localStorage.getItem('phantom_fours_version')
-      const saved = localStorage.getItem('phantom_fours_data')
-      if (saved && savedVersion === DATA_VERSION) return JSON.parse(saved)
+      // const savedVersion = localStorage.getItem('phantom_fours_version')
+      // const saved = localStorage.getItem('phantom_fours_data')
+      // if (saved && savedVersion === DATA_VERSION) return JSON.parse(saved)
       return DEFAULT_FOURS
     } catch { return DEFAULT_FOURS }
   })
