@@ -18,7 +18,8 @@ const DEFAULT_DATA = {
    9: { actual: { Ash: 10,  Ata: 11,  Cole: 8,   Ella: 15,  Jensen: 10,  Zach: 12 }, estimate: { Ash: 15, Ata: 11, Cole: 10, Ella: 15, Jensen: 12, Zach: 10 } },
   10: { actual: { Ash: 16,  Ata: 13,  Cole: 9,   Ella: 13,  Jensen: 14,  Zach: 15 }, estimate: { Ash: 16, Ata: 14, Cole: 11, Ella: 10, Jensen: 14, Zach: 16 } },
   11: { actual: { Ash: 18,  Ata: 12,  Cole: 10,  Ella: 8,   Jensen: 11,  Zach: 10 }, estimate: { Ash: 18, Ata: 15, Cole: 12, Ella: 10, Jensen: 12, Zach: 10 } },
-  12: { actual: { Ash: 0,   Ata: 0,   Cole: 0,   Ella: 0,   Jensen: 0,   Zach: 0  }, estimate: { Ash: 18, Ata: 15, Cole: 13, Ella: 15, Jensen: 14, Zach: 15 } },
+  12: { actual: { Ash: 15,  Ata: 13,  Cole: 8,   Ella: 10,  Jensen: 8,   Zach: 10 }, estimate: { Ash: 18, Ata: 15, Cole: 13, Ella: 15, Jensen: 14, Zach: 15 } },
+  12: { actual: { Ash: 0,   Ata: 0,   Cole: 0,   Ella: 0,   Jensen: 0,   Zach: 0  }, estimate: { Ash: 13, Ata: 13, Cole: 13, Ella: 15, Jensen: 15, Zach: 15 } },
 };
 
 function initData() {
