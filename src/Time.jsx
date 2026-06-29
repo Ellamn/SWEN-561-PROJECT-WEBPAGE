@@ -23,12 +23,13 @@ const DEFAULT_DATA = {
   14: { actual: { Ash: 10,  Ata: 11,  Cole: 7,   Ella: 13,  Jensen: 12,  Zach: 11 }, estimate: { Ash: 10, Ata: 12, Cole: 10, Ella: 10, Jensen: 12, Zach: 11 } },
   15: { actual: { Ash: 8,   Ata: 8,   Cole: 7,   Ella: 8,   Jensen: 10,  Zach: 10 }, estimate: { Ash: 9,  Ata: 8,  Cole: 10, Ella: 15, Jensen: 10, Zach: 10 } },
   17: { actual: { Ash: 8,   Ata: 13,  Cole: 10,  Ella: 8,   Jensen: 12,  Zach: 13 }, estimate: { Ash: 8,  Ata: 11, Cole: 12, Ella: 10, Jensen: 15, Zach: 13 } },
-  18: { actual: { Ash: 10,  Ata: 14,  Cole: 13,  Ella: 10,   Jensen: 12, Zach: 13 }, estimate: { Ash: 20, Ata: 15, Cole: 15, Ella: 15, Jensen: 12, Zach: 14 } },
+  18: { actual: { Ash: 10,  Ata: 14,  Cole: 13,  Ella: 10,  Jensen: 12,  Zach: 13 }, estimate: { Ash: 20, Ata: 15, Cole: 15, Ella: 15, Jensen: 12, Zach: 14 } },
   19: { actual: { Ash: 8,   Ata: 17,  Cole: 11,  Ella: 15,  Jensen: 14,  Zach: 11 }, estimate: { Ash: 8,  Ata: 16, Cole: 12, Ella: 15, Jensen: 15, Zach: 12 } },
   20: { actual: { Ash: 8,   Ata: 17,  Cole: 8,   Ella: 15,  Jensen: 14,  Zach: 10 }, estimate: { Ash: 8,  Ata: 18, Cole: 10, Ella: 15, Jensen: 12, Zach: 11 } },
   21: { actual: { Ash: 10,  Ata: 16,  Cole: 10,  Ella: 10,  Jensen: 16,  Zach: 11 }, estimate: { Ash: 8,  Ata: 16, Cole: 10, Ella: 10, Jensen: 15, Zach: 12 } },
   22: { actual: { Ash: 10,  Ata: 16,  Cole: 8,   Ella: 20,  Jensen: 18,  Zach: 12 }, estimate: { Ash: 8,  Ata: 15, Cole: 8,  Ella: 12, Jensen: 16, Zach: 13 } },
-  23: { actual: { Ash: 0,   Ata: 0,   Cole: 0,   Ella: 0,   Jensen: 0,   Zach: 0  }, estimate: { Ash: 8,  Ata: 11, Cole: 10, Ella: 20, Jensen: 16, Zach: 15 } },
+  23: { actual: { Ash: 10,  Ata: 15,  Cole: 11,  Ella: 15,  Jensen: 16,  Zach: 14 }, estimate: { Ash: 8,  Ata: 11, Cole: 10, Ella: 20, Jensen: 16, Zach: 15 } },
+  24: { actual: { Ash: 0,   Ata: 0,   Cole: 0,   Ella: 0,   Jensen: 0,   Zach: 0  }, estimate: { Ash: 10, Ata: 13, Cole: 12, Ella: 15, Jensen: 15, Zach: 16 } },
 };
 
 function initData() {
